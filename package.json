@@ -30,6 +30,10 @@
     "prettier": "^3.3.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.15.0",
-    "vite": "^5.4.10"
+    "vite": "^5.4.10",
+    "picomatch": "^4.0.5"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "4.x"
   }
 }
