@@ -16,6 +16,10 @@ interface ToolbarProps {
   isExporting: boolean;
   view: 'vertical' | 'horizontal';
   onViewChange: (view: 'vertical' | 'horizontal') => void;
+  mobileEdit: boolean;
+  onToggleMobileEdit: () => void;
+  mobileAuto: boolean;
+  onResetMobileEdit: () => void;
 }
 
 const Toolbar = memo(
@@ -34,6 +38,10 @@ const Toolbar = memo(
     isExporting,
     view,
     onViewChange,
+    mobileEdit,
+    onToggleMobileEdit,
+    mobileAuto,
+    onResetMobileEdit,
   }: ToolbarProps) => {
     const handleImageChange =
       (kind: ImageKind) =>
@@ -66,9 +74,9 @@ const Toolbar = memo(
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
                   <line x1="3" y1="6" x2="21" y2="6"></line>
                   <line x1="3" y1="12" x2="21" y2="12"></line>
@@ -80,6 +88,7 @@ const Toolbar = memo(
                 className={`view-btn${view === 'horizontal' ? ' active' : ''}`}
                 onClick={() => onViewChange('horizontal')}
                 title="Горизонтальный вид (неделя в ряд)"
+                disabled={mobileEdit}
               >
                 <svg
                   width="24"
@@ -87,9 +96,9 @@ const Toolbar = memo(
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 >
                   <rect x="3" y="3" width="7" height="7"></rect>
                   <rect x="14" y="3" width="7" height="7"></rect>
@@ -97,6 +106,20 @@ const Toolbar = memo(
                   <rect x="3" y="14" width="7" height="7"></rect>
                 </svg>
               </button>
+              {mobileEdit && (
+                <button
+                  type="button"
+                  className={`view-btn${mobileEdit ? ' active' : ''}`}
+                  onClick={mobileAuto ? onToggleMobileEdit : onResetMobileEdit}
+                  title={
+                    mobileAuto
+                      ? 'Мобильное редактирование (авто). Нажмите для отключения'
+                      : 'Мобильное редактирование вручную. Нажмите для возврата в авто-режим'
+                  }
+                >
+                  📱
+                </button>
+              )}
             </div>
             <button className="btn btn-export" onClick={onExport}>
               📥 Экспорт

@@ -41,14 +41,37 @@ textarea {
 }
 
 .app-shell {
-  width: 1080px;
+  width: 100%;
+  max-width: 1080px;
   margin: 0 auto;
-  padding-bottom: 40px;
+  /* padding: 0 12px 40px; */
+}
+
+.poster-scroll {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-border) transparent;
+}
+
+.poster-scroll::-webkit-scrollbar {
+  height: 8px;
+}
+
+.poster-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.poster-scroll::-webkit-scrollbar-thumb {
+  background: var(--c-border);
+  border-radius: 4px;
 }
 
 .save-bar,
 .theme-bar {
-  width: 1080px;
+  width: 100%;
+  max-width: 1080px;
   margin: 24px auto 0;
   display: flex;
   flex-wrap: wrap;
@@ -72,7 +95,9 @@ textarea {
   align-items: center;
   gap: 8px;
   color: var(--c-text-muted);
+  min-height: 44px;
 }
+
 [contenteditable='true']:hover {
   background: rgba(255, 255, 255, 0.07);
 }
@@ -88,7 +113,9 @@ textarea {
   border: 1px solid var(--c-border);
   border-radius: 8px;
   color: var(--c-text);
-  padding: 6px 10px;
+  padding: 8px 12px;
+  min-height: 44px;
+  font-size: 16px;
 }
 input[type='date'] {
   color-scheme: dark;
@@ -104,10 +131,13 @@ input[type='date'] {
 .btn-file {
   border: none;
   border-radius: 10px;
-  padding: 8px 12px;
+  padding: 10px 16px;
   cursor: pointer;
   font-weight: 600;
   transition: background 0.2s ease;
+  min-height: 44px;
+  font-size: 16px;
+  touch-action: manipulation;
 }
 
 .btn-export {
@@ -273,8 +303,8 @@ input[type='date'] {
 }
 .day-toggle,
 .highlight-toggle {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: var(--c-panel);
   border: 1px solid var(--c-border-dashed);
@@ -289,6 +319,7 @@ input[type='date'] {
   user-select: none;
   font-weight: 700;
   padding: 0;
+  touch-action: manipulation;
 }
 .day-toggle:hover,
 .highlight-toggle:hover {
@@ -318,9 +349,6 @@ input[type='date'] {
   flex-direction: column;
   align-items: flex-end;
   gap: 8px;
-  position: absolute;
-  right: -35px;
-  top: 0;
 }
 .day {
   font-family: 'Rajdhani', sans-serif;
@@ -409,6 +437,9 @@ input[type='date'] {
   color: var(--c-text-faint);
   font-weight: 500;
 }
+.day-controls {
+  justify-content: space-between;
+}
 .game-actions {
   display: flex;
   gap: 6px;
@@ -419,12 +450,13 @@ input[type='date'] {
   border: none;
   color: var(--c-text-muted);
   border-radius: 6px;
-  padding: 4px 12px;
+  padding: 8px 12px;
   font-size: 14px;
   cursor: pointer;
   transition: background 0.2s;
   font-family: 'Manrope', sans-serif;
   font-weight: 600;
+  min-height: 36px;
 }
 .game-actions button:hover {
   background: var(--c-border-dashed);
@@ -442,10 +474,14 @@ input[type='date'] {
   color: #120c1a;
   border: none;
   border-radius: 999px;
-  width: 24px;
-  height: 24px;
+  width: 32px;
+  height: 32px;
   cursor: pointer;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: manipulation;
 }
 .remove-btn:hover {
   background: #ff7a85;
@@ -489,13 +525,18 @@ input[type='date'] {
   border: none;
   background: var(--c-panel-alt);
   color: var(--c-text-muted);
-  padding: 8px 12px;
+  padding: 10px 14px;
   cursor: pointer;
   font-weight: 600;
   display: flex;
+  min-height: 44px;
+  min-width: 44px;
+  align-items: center;
+  justify-content: center;
   transition:
     background 0.2s ease,
     color 0.2s ease;
+  touch-action: manipulation;
 }
 .view-btn + .view-btn {
   border-left: 1px solid var(--c-border);
@@ -574,4 +615,235 @@ input[type='date'] {
 .poster.horizontal .game-item .tag {
   font-size: 11px;
   text-align: center;
+}
+
+.poster.mobile-edit {
+  width: 100%;
+  border-radius: 12px;
+}
+
+.poster.mobile-edit .hero {
+  height: 220px;
+}
+
+.poster.mobile-edit .hero-content {
+  left: 24px;
+  bottom: 28px;
+  max-width: 80%;
+}
+
+.poster.mobile-edit .eyebrow {
+  font-size: 16px;
+  letter-spacing: 4px;
+  margin-bottom: 6px;
+}
+
+.poster.mobile-edit .title {
+  font-size: 32px;
+  text-shadow: 0 0 18px var(--c-accent-glow-35);
+}
+
+.poster.mobile-edit .subtitle {
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.poster.mobile-edit .mascot-badge {
+  width: 88px;
+  height: 88px;
+  right: 24px;
+  bottom: -28px;
+}
+
+.poster.mobile-edit .mascot-badge img {
+  width: 52px;
+  height: 52px;
+}
+
+.poster.mobile-edit .schedule {
+  padding: 0 10px 0;
+  gap: 12px;
+}
+
+.poster.mobile-edit .row {
+  grid-template-columns: 1fr;
+  padding: 18px 16px;
+  gap: 10px;
+  border-radius: 12px;
+}
+
+.poster.mobile-edit .row > div:first-child {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  padding-right: 0;
+}
+
+.poster.mobile-edit .day {
+  font-size: 24px;
+}
+
+.poster.mobile-edit .date {
+  font-size: 13px;
+  margin-top: 0;
+}
+
+.poster.mobile-edit .games-list {
+  gap: 10px;
+}
+
+.poster.mobile-edit .game-item {
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  text-align: left;
+  position: relative;
+}
+
+.poster.mobile-edit .game-item .game {
+  font-size: 18px;
+}
+
+.poster.mobile-edit .game-item .tag {
+  font-size: 12px;
+}
+
+.poster.mobile-edit .time-container {
+  justify-content: flex-start;
+}
+
+.poster.mobile-edit .game-item .time {
+  font-size: 20px;
+  padding: 6px 14px;
+  min-width: 110px;
+  justify-self: start;
+}
+
+.poster.mobile-edit .right-controls {
+  position: static;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top: 4px;
+}
+
+.poster.mobile-edit .day-toggle,
+.poster.mobile-edit .highlight-toggle {
+  width: 40px;
+  height: 40px;
+  font-size: 16px;
+}
+
+.poster.mobile-edit .game-actions {
+  margin-top: 4px;
+}
+
+.poster.mobile-edit .game-actions button {
+  padding: 10px 14px;
+  font-size: 14px;
+  min-height: 40px;
+}
+
+.poster.mobile-edit .footer {
+  margin: 20px 16px 0;
+}
+
+@media (max-width: 768px) {
+  .save-bar,
+  .theme-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .btn-group {
+    width: 100%;
+    justify-content: stretch;
+  }
+
+  .btn-group .btn {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .theme-bar {
+    align-items: stretch;
+  }
+
+  .theme-group {
+    flex-wrap: wrap;
+  }
+
+  .save-bar label,
+  .theme-group {
+    justify-content: space-between;
+  }
+
+  .save-bar label input[type='date'],
+  .theme-group input[type='color'] {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .right-controls {
+    right: 4px;
+    top: 4px;
+    gap: 4px;
+  }
+
+  .day-toggle,
+  .highlight-toggle {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .remove-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .game-actions button {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .row {
+    padding: 16px 16px 16px 16px;
+    gap: 8px;
+  }
+
+  .schedule {
+    padding: 0 16px;
+    gap: 10px;
+  }
+
+  .poster {
+    margin-top: 16px;
+    border-radius: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-shell {
+    padding: 0 8px 32px;
+  }
+
+  .btn {
+    font-size: 14px;
+    padding: 10px 12px;
+  }
+
+  .poster {
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+
+  .schedule {
+    padding: 0 12px;
+  }
+
+  .row {
+    padding: 14px 12px;
+  }
 }

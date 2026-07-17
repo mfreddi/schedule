@@ -31,6 +31,10 @@ function App() {
     isExporting,
     view,
     setView,
+    mobileEdit,
+    toggleMobileEdit,
+    resetMobileEdit,
+    mobileAuto,
   } = useScheduleState();
 
   const onImportClick = useCallback(() => fileInputRef.current?.click(), []);
@@ -53,28 +57,35 @@ function App() {
         isExporting={isExporting}
         view={view}
         onViewChange={setView}
+        mobileEdit={mobileEdit}
+        onToggleMobileEdit={toggleMobileEdit}
+        mobileAuto={mobileAuto}
+        onResetMobileEdit={resetMobileEdit}
       />
       <input ref={fileInputRef} type="file" accept=".json" onChange={handleFileImport} hidden />
 
-      <Poster
-        posterRef={posterRef}
-        hero={state.hero}
-        images={state.images}
-        scheduleData={state.scheduleData}
-        mondayDate={mondayDate}
-        onHeroFieldChange={updateHeroField}
-        onHeroTitleChange={updateHeroTitle}
-        onDayNameChange={updateDayName}
-        onOffTextChange={updateOffDayText}
-        onGameFieldChange={updateGame}
-        onRemoveGame={removeGame}
-        onAddGame={addGame}
-        onToggleOffDay={toggleOffDay}
-        onToggleHighlightDay={toggleHighlightDay}
-        onTwitchChange={setTwitch}
-        twitch={state.twitch}
-        view={view}
-      />
+      <div className="poster-scroll">
+        <Poster
+          posterRef={posterRef}
+          hero={state.hero}
+          images={state.images}
+          scheduleData={state.scheduleData}
+          mondayDate={mondayDate}
+          onHeroFieldChange={updateHeroField}
+          onHeroTitleChange={updateHeroTitle}
+          onDayNameChange={updateDayName}
+          onOffTextChange={updateOffDayText}
+          onGameFieldChange={updateGame}
+          onRemoveGame={removeGame}
+          onAddGame={addGame}
+          onToggleOffDay={toggleOffDay}
+          onToggleHighlightDay={toggleHighlightDay}
+          onTwitchChange={setTwitch}
+          twitch={state.twitch}
+          view={view}
+          mobileEdit={mobileEdit}
+        />
+      </div>
     </div>
   );
 }

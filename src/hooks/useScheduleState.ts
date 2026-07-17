@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState, type ChangeEvent } from 'react';
+import { useCallback, useMemo, useEffect, useState, type ChangeEvent } from 'react';
 import type { GameField, ImageKind, ScheduleDay, ScheduleState, ThemeKey } from '../types';
 import {
   createDefaultState,
@@ -38,6 +38,10 @@ export interface UseScheduleStateResult {
   isExporting: boolean;
   view: 'vertical' | 'horizontal';
   setView: (view: 'vertical' | 'horizontal') => void;
+  mobileEdit: boolean;
+  toggleMobileEdit: () => void;
+  resetMobileEdit: () => void;
+  mobileAuto: boolean;
 }
 
 export function useScheduleState(): UseScheduleStateResult {
@@ -59,6 +63,33 @@ export function useScheduleState(): UseScheduleStateResult {
   }, []);
 
   const [view, setView] = useState<'vertical' | 'horizontal'>('vertical');
+  const [mobileAuto, setMobileAuto] = useState(true);
+  const [mobileEdit, setMobileEdit] = useState(false);
+  const [manualMobileEdit, setManualMobileEdit] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mql = window.matchMedia('(max-width: 768px)');
+    const apply = (matches: boolean) => {
+      setMobileEdit(mobileAuto ? matches : manualMobileEdit);
+      if (matches) {
+        setView('vertical');
+      }
+    };
+    apply(mql.matches);
+    mql.addEventListener('change', (e) => apply(e.matches));
+    return () => mql.removeEventListener('change', (e) => apply(e.matches));
+  }, [mobileAuto, manualMobileEdit]);
+
+  const toggleMobileEdit = useCallback(() => {
+    setMobileAuto(false);
+    setManualMobileEdit((v) => !v);
+  }, []);
+
+  const resetMobileEdit = useCallback(() => {
+    setMobileAuto(true);
+    setManualMobileEdit(false);
+  }, []);
 
   const setStartDate = useCallback((value: string): void => {
     setState((prev: ScheduleState) => ({
@@ -225,5 +256,9 @@ export function useScheduleState(): UseScheduleStateResult {
     isExporting,
     view,
     setView,
+    mobileEdit,
+    toggleMobileEdit,
+    resetMobileEdit,
+    mobileAuto,
   };
 }

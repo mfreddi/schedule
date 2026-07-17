@@ -19,6 +19,7 @@ interface PosterProps {
   onTwitchChange: (value: string) => void;
   twitch: string;
   view: 'vertical' | 'horizontal';
+  mobileEdit: boolean;
 }
 
 const formatDate = (d: Date): string => {
@@ -59,10 +60,11 @@ const Poster = memo(
     onTwitchChange,
     twitch,
     view,
+    mobileEdit,
   }: PosterProps) => {
     return (
       <div
-        className={`poster ${view === 'horizontal' ? 'horizontal' : 'vertical'}`}
+        className={`poster ${view === 'horizontal' ? 'horizontal' : 'vertical'}${mobileEdit ? ' mobile-edit' : ''}`}
         ref={posterRef}
       >
         <div className="hero">
@@ -210,28 +212,29 @@ const Poster = memo(
                     </div>
                   ))}
 
-                  <div className="game-actions" data-html2canvas-ignore>
-                    <button className="add-btn" onClick={() => onAddGame(index)}>
-                      Добавить стрим
-                    </button>
+                  <div className="day-controls">
+                    <div className="game-actions" data-html2canvas-ignore>
+                      <button className="add-btn" onClick={() => onAddGame(index)}>
+                        Добавить стрим
+                      </button>
+                    </div>
+                    <div className="right-controls" data-html2canvas-ignore>
+                      <button
+                        className="day-toggle"
+                        onClick={() => onToggleOffDay(index)}
+                        title="Выходной"
+                      >
+                        Off
+                      </button>
+                      <button
+                        className="highlight-toggle"
+                        onClick={() => onToggleHighlightDay(index)}
+                        title="Выделить день"
+                      >
+                        ★
+                      </button>
+                    </div>
                   </div>
-                </div>
-
-                <div className="right-controls" data-html2canvas-ignore>
-                  <button
-                    className="day-toggle"
-                    onClick={() => onToggleOffDay(index)}
-                    title="Выходной"
-                  >
-                    Off
-                  </button>
-                  <button
-                    className="highlight-toggle"
-                    onClick={() => onToggleHighlightDay(index)}
-                    title="Выделить день"
-                  >
-                    ★
-                  </button>
                 </div>
               </div>
             );
