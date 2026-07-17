@@ -83,6 +83,42 @@ export function cloneData<T>(data: T): T {
   return JSON.parse(JSON.stringify(data));
 }
 
+const MONTH_NAMES_GENITIVE = [
+  'января',
+  'февраля',
+  'марта',
+  'апреля',
+  'мая',
+  'июня',
+  'июля',
+  'августа',
+  'сентября',
+  'октября',
+  'ноября',
+  'декабря',
+];
+
+const MONTH_NAMES_UPPER = MONTH_NAMES_GENITIVE.map((m) => m.toUpperCase());
+
+export function formatDateRangeTitle(startDate: string): [string, string] {
+  const monday = new Date(`${startDate}T00:00:00`);
+  if (Number.isNaN(monday.getTime())) return ['', ''];
+  const start = getMonday(monday);
+  const end = new Date(start);
+  end.setDate(end.getDate() + 6);
+
+  const startDay = start.getDate();
+  const endDay = end.getDate();
+
+  if (start.getMonth() === end.getMonth()) {
+    return [`${startDay}—${endDay}`, MONTH_NAMES_UPPER[start.getMonth()]];
+  }
+  return [
+    `${startDay} ${MONTH_NAMES_GENITIVE[start.getMonth()]} — ${endDay} ${MONTH_NAMES_GENITIVE[end.getMonth()]}`,
+    '',
+  ];
+}
+
 export function getMonday(date: Date): Date {
   const d = new Date(date);
   const day = d.getDay();
@@ -108,7 +144,7 @@ export function createDefaultState(): ScheduleState {
     scheduleData: cloneData(DEFAULT_DATA),
     hero: {
       eyebrow: 'Неделя стримов',
-      titleLines: ['14—20', 'ИЮЛЯ'],
+      titleLines: formatDateRangeTitle(formatDateInput(monday)),
       subtitle: 'Расписание на эту неделю',
     },
     twitch: 'twitch.tv/mFred',

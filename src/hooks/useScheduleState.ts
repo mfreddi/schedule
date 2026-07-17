@@ -5,6 +5,7 @@ import {
   DEFAULT_THEME,
   DEFAULT_IMAGES,
   getMonday,
+  formatDateRangeTitle,
 } from '../utils/scheduleState';
 import { usePersistence } from './usePersistence';
 import { useExport } from './useExport';
@@ -59,10 +60,13 @@ export function useScheduleState(): UseScheduleStateResult {
 
   const [view, setView] = useState<'vertical' | 'horizontal'>('vertical');
 
-  const setStartDate = useCallback(
-    (value: string): void => updatePartial({ startDate: value }),
-    [updatePartial],
-  );
+  const setStartDate = useCallback((value: string): void => {
+    setState((prev: ScheduleState) => ({
+      ...prev,
+      startDate: value,
+      hero: { ...prev.hero, titleLines: formatDateRangeTitle(value) },
+    }));
+  }, []);
 
   const setTwitch = useCallback(
     (value: string): void => updatePartial({ twitch: value }),
