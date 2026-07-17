@@ -198,16 +198,14 @@ const Poster = memo(
                         >
                           {game.time}
                         </div>
-                        {gameIdx !== 0 && (
-                          <button
-                            data-html2canvas-ignore
-                            className="remove-btn"
-                            onClick={() => onRemoveGame(index, gameIdx)}
-                            title="Удалить стрим"
-                          >
-                            ✖
-                          </button>
-                        )}
+                        <button
+                          data-html2canvas-ignore
+                          className="remove-btn"
+                          onClick={() => onRemoveGame(index, gameIdx)}
+                          title="Удалить стрим"
+                        >
+                          ✖
+                        </button>
                       </div>
                     </div>
                   ))}
