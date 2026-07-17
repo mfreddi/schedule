@@ -18,6 +18,7 @@ interface PosterProps {
   onToggleHighlightDay: (dayIdx: number) => void;
   onTwitchChange: (value: string) => void;
   twitch: string;
+  view: 'vertical' | 'horizontal';
 }
 
 const formatDate = (d: Date): string => {
@@ -57,9 +58,13 @@ const Poster = memo(
     onToggleHighlightDay,
     onTwitchChange,
     twitch,
+    view,
   }: PosterProps) => {
     return (
-      <div className={`poster`} ref={posterRef}>
+      <div
+        className={`poster ${view === 'horizontal' ? 'horizontal' : 'vertical'}`}
+        ref={posterRef}
+      >
         <div className="hero">
           <div className="hero-bg" style={{ backgroundImage: `url('${images.hero}')` }} />
           <div className="hero-content">
@@ -193,21 +198,23 @@ const Poster = memo(
                         >
                           {game.time}
                         </div>
-                        <button
-                          data-html2canvas-ignore
-                          className="remove-btn"
-                          onClick={() => onRemoveGame(index, gameIdx)}
-                          title="Удалить стрим"
-                        >
-                          ✖
-                        </button>
+                        {gameIdx !== 0 && (
+                          <button
+                            data-html2canvas-ignore
+                            className="remove-btn"
+                            onClick={() => onRemoveGame(index, gameIdx)}
+                            title="Удалить стрим"
+                          >
+                            ✖
+                          </button>
+                        )}
                       </div>
                     </div>
                   ))}
 
                   <div className="game-actions" data-html2canvas-ignore>
                     <button className="add-btn" onClick={() => onAddGame(index)}>
-                      + Добавить стрим
+                      Добавить стрим
                     </button>
                   </div>
                 </div>

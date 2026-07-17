@@ -14,6 +14,8 @@ interface ToolbarProps {
   onImageReset: (kind: ImageKind) => void;
   onThemeReset: () => void;
   isExporting: boolean;
+  view: 'vertical' | 'horizontal';
+  onViewChange: (view: 'vertical' | 'horizontal') => void;
 }
 
 const Toolbar = memo(
@@ -30,103 +32,151 @@ const Toolbar = memo(
     onImageReset,
     onThemeReset,
     isExporting,
+    view,
+    onViewChange,
   }: ToolbarProps) => {
-  const handleImageChange =
-    (kind: ImageKind) =>
-    (event: ChangeEvent<HTMLInputElement>): void => {
-      onImageUpload(kind, event.target.files?.[0]);
-    };
+    const handleImageChange =
+      (kind: ImageKind) =>
+      (event: ChangeEvent<HTMLInputElement>): void => {
+        onImageUpload(kind, event.target.files?.[0]);
+      };
 
-  return (
-    <>
-      <div className="save-bar">
-        <label>
-          Начало недели (ПН):
-          <input
-            type="date"
-            value={startDate}
-            onChange={(event) => onStartDateChange(event.target.value)}
-          />
-        </label>
-        <div className="btn-group">
-          <button className="btn btn-export" onClick={onExport}>
-            📥 Экспорт
-          </button>
-          <button className="btn btn-success" onClick={onImportClick}>
-            📤 Импорт
-          </button>
-          <button className="btn btn-secondary" onClick={onReset}>
-            Сбросить всё
-          </button>
-          <button className="btn btn-primary" onClick={onSaveImage} disabled={isExporting}>
-            {isExporting ? 'Готовим картинку…' : 'Скачать картинкой'}
-          </button>
+    return (
+      <>
+        <div className="save-bar">
+          <label>
+            Начало (ПН):
+            <input
+              type="date"
+              value={startDate}
+              onChange={(event) => onStartDateChange(event.target.value)}
+            />
+          </label>
+          <div className="btn-group">
+            <div className="view-switch" role="group" aria-label="Вид расписания">
+              <button
+                type="button"
+                className={`view-btn${view === 'vertical' ? ' active' : ''}`}
+                onClick={() => onViewChange('vertical')}
+                title="Вертикальный вид (для мобилок)"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <line x1="3" y1="6" x2="21" y2="6"></line>
+                  <line x1="3" y1="12" x2="21" y2="12"></line>
+                  <line x1="3" y1="18" x2="21" y2="18"></line>
+                </svg>
+              </button>
+              <button
+                type="button"
+                className={`view-btn${view === 'horizontal' ? ' active' : ''}`}
+                onClick={() => onViewChange('horizontal')}
+                title="Горизонтальный вид (неделя в ряд)"
+              >
+                <svg
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect x="3" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="3" width="7" height="7"></rect>
+                  <rect x="14" y="14" width="7" height="7"></rect>
+                  <rect x="3" y="14" width="7" height="7"></rect>
+                </svg>
+              </button>
+            </div>
+            <button className="btn btn-export" onClick={onExport}>
+              📥 Экспорт
+            </button>
+            <button className="btn btn-success" onClick={onImportClick}>
+              📤 Импорт
+            </button>
+            <button className="btn btn-secondary" onClick={onReset}>
+              Сбросить всё
+            </button>
+            <button className="btn btn-primary" onClick={onSaveImage} disabled={isExporting}>
+              {isExporting ? 'Готовим картинку…' : 'Скачать картинкой'}
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div className="theme-bar">
-        <div className="theme-group">
-          <span>Акцент 1</span>
-          <input
-            type="color"
-            value={theme.accent}
-            onChange={(event) => onThemeColorChange('accent', event.target.value)}
-          />
+        <div className="theme-bar">
+          <div className="theme-group">
+            <span>Акцент 1</span>
+            <input
+              type="color"
+              value={theme.accent}
+              onChange={(event) => onThemeColorChange('accent', event.target.value)}
+            />
+          </div>
+          <div className="theme-group">
+            <span>Акцент 2</span>
+            <input
+              type="color"
+              value={theme.accent2}
+              onChange={(event) => onThemeColorChange('accent2', event.target.value)}
+            />
+          </div>
+          <div className="theme-group">
+            <span>Фон</span>
+            <input
+              type="color"
+              value={theme.bg}
+              onChange={(event) => onThemeColorChange('bg', event.target.value)}
+            />
+          </div>
+          <div className="theme-group">
+            <label className="btn-file" htmlFor="bgImageInput">
+              🖼 Фон обложки
+            </label>
+            <input
+              id="bgImageInput"
+              hidden
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange('hero')}
+            />
+            <button className="btn-reset-mini" onClick={() => onImageReset('hero')}>
+              сброс
+            </button>
+          </div>
+          <div className="theme-group">
+            <label className="btn-file" htmlFor="mascotImageInput">
+              🐾 Маскот
+            </label>
+            <input
+              id="mascotImageInput"
+              type="file"
+              hidden
+              accept="image/*"
+              onChange={handleImageChange('mascot')}
+            />
+            <button className="btn-reset-mini" onClick={() => onImageReset('mascot')}>
+              сброс
+            </button>
+          </div>
+          <div className="theme-group">
+            <button className="btn-reset-mini" onClick={onThemeReset}>
+              сбросить оформление
+            </button>
+          </div>
         </div>
-        <div className="theme-group">
-          <span>Акцент 2</span>
-          <input
-            type="color"
-            value={theme.accent2}
-            onChange={(event) => onThemeColorChange('accent2', event.target.value)}
-          />
-        </div>
-        <div className="theme-group">
-          <span>Фон</span>
-          <input
-            type="color"
-            value={theme.bg}
-            onChange={(event) => onThemeColorChange('bg', event.target.value)}
-          />
-        </div>
-        <div className="theme-group">
-          <label className="btn-file" htmlFor="bgImageInput">
-            🖼 Фон обложки
-          </label>
-          <input
-            id="bgImageInput"
-            hidden
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange('hero')}
-          />
-          <button className="btn-reset-mini" onClick={() => onImageReset('hero')}>
-            сброс
-          </button>
-        </div>
-        <div className="theme-group">
-          <label className="btn-file" htmlFor="mascotImageInput">
-            🐾 Маскот
-          </label>
-          <input
-            id="mascotImageInput"
-            type="file"
-            hidden
-            accept="image/*"
-            onChange={handleImageChange('mascot')}
-          />
-          <button className="btn-reset-mini" onClick={() => onImageReset('mascot')}>
-            сброс
-          </button>
-        </div>
-        <div className="theme-group">
-          <button className="btn-reset-mini" onClick={onThemeReset}>
-            сбросить оформление
-          </button>
-        </div>
-      </div>
-    </>
-  );
-});
+      </>
+    );
+  },
+);
 
 export default Toolbar;

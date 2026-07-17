@@ -29,6 +29,8 @@ function App() {
     resetTheme,
     saveAsImage,
     isExporting,
+    view,
+    setView,
   } = useScheduleState();
 
   const onImportClick = useCallback(() => fileInputRef.current?.click(), []);
@@ -49,6 +51,8 @@ function App() {
         onImageReset={resetImage}
         onThemeReset={resetTheme}
         isExporting={isExporting}
+        view={view}
+        onViewChange={setView}
       />
       <input ref={fileInputRef} type="file" accept=".json" onChange={handleFileImport} hidden />
 
@@ -69,6 +73,7 @@ function App() {
         onToggleHighlightDay={toggleHighlightDay}
         onTwitchChange={setTwitch}
         twitch={state.twitch}
+        view={view}
       />
     </div>
   );

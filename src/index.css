@@ -184,6 +184,7 @@ input[type='date'] {
   left: 64px;
   bottom: 44px;
   z-index: 2;
+  max-width: 70%;
 }
 .eyebrow {
   font-family: 'Rajdhani', sans-serif;
@@ -441,8 +442,8 @@ input[type='date'] {
   color: #120c1a;
   border: none;
   border-radius: 999px;
-  width: 34px;
-  height: 34px;
+  width: 24px;
+  height: 24px;
   cursor: pointer;
   font-weight: 700;
 }
@@ -476,4 +477,101 @@ input[type='date'] {
 }
 .twitch-link span {
   outline: none;
+}
+
+.view-switch {
+  display: inline-flex;
+  border: 1px solid var(--c-border);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.view-btn {
+  border: none;
+  background: var(--c-panel-alt);
+  color: var(--c-text-muted);
+  padding: 8px 12px;
+  cursor: pointer;
+  font-weight: 600;
+  display: flex;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+}
+.view-btn + .view-btn {
+  border-left: 1px solid var(--c-border);
+}
+.view-btn.active {
+  background: var(--c-accent);
+  color: #120c1a;
+}
+
+.poster.horizontal {
+  width: auto;
+}
+.poster.horizontal .schedule {
+  display: grid;
+  grid-template-columns: repeat(7, 140px);
+  gap: 12px;
+  overflow-x: auto;
+  padding: 0 12px;
+}
+.poster.horizontal .row {
+  grid-template-columns: 1fr;
+  padding: 14px 16px 14px 16px;
+  min-height: 220px;
+  text-align: center;
+}
+.poster.horizontal .row > div:first-child {
+  padding-right: 34px;
+}
+.poster.horizontal .date {
+  text-align: center;
+}
+.poster.horizontal .right-controls {
+  right: 8px;
+  top: 8px;
+}
+.poster.horizontal .game-item {
+  grid-template-columns: 1fr;
+  gap: 8px;
+  text-align: center;
+}
+.poster.horizontal .game-item .game-info {
+  align-items: center;
+}
+.poster.horizontal .game-item .time {
+  justify-self: center;
+  min-width: auto;
+}
+.poster.horizontal .time-container {
+  justify-content: center;
+  gap: 8px;
+}
+.poster.horizontal .day {
+  font-size: 24px;
+}
+.poster.horizontal .game-item .game {
+  font-size: 17px;
+  text-align: center;
+}
+.poster.horizontal .game-item .time {
+  font-size: 17px;
+  padding: 4px 10px;
+  width: 100%;
+}
+.poster.horizontal .games-list {
+  margin-top: 10px;
+  align-items: center;
+}
+.poster.horizontal .game-actions {
+  justify-content: center;
+  width: 100%;
+}
+.poster.horizontal .remove-btn {
+  position: absolute;
+  right: -8px;
+}
+.poster.horizontal .game-item .tag {
+  font-size: 11px;
+  text-align: center;
 }

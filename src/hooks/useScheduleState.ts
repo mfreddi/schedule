@@ -1,6 +1,11 @@
 import { useCallback, useMemo, useState, type ChangeEvent } from 'react';
 import type { GameField, ImageKind, ScheduleDay, ScheduleState, ThemeKey } from '../types';
-import { createDefaultState, DEFAULT_THEME, DEFAULT_IMAGES, getMonday } from '../utils/scheduleState';
+import {
+  createDefaultState,
+  DEFAULT_THEME,
+  DEFAULT_IMAGES,
+  getMonday,
+} from '../utils/scheduleState';
 import { usePersistence } from './usePersistence';
 import { useExport } from './useExport';
 import { useImageManager } from './useImageManager';
@@ -30,6 +35,8 @@ export interface UseScheduleStateResult {
   resetTheme: () => void;
   saveAsImage: (posterElement: HTMLElement | null) => Promise<void>;
   isExporting: boolean;
+  view: 'vertical' | 'horizontal';
+  setView: (view: 'vertical' | 'horizontal') => void;
 }
 
 export function useScheduleState(): UseScheduleStateResult {
@@ -49,6 +56,8 @@ export function useScheduleState(): UseScheduleStateResult {
   const updatePartial = useCallback((partial: Partial<ScheduleState>): void => {
     setState((prev: ScheduleState) => ({ ...prev, ...partial }));
   }, []);
+
+  const [view, setView] = useState<'vertical' | 'horizontal'>('vertical');
 
   const setStartDate = useCallback(
     (value: string): void => updatePartial({ startDate: value }),
@@ -124,7 +133,7 @@ export function useScheduleState(): UseScheduleStateResult {
         if (nextDay.off) nextDay.off = false;
         nextDay.games = [
           ...nextDay.games,
-          { name: 'Новый стрим', time: '12:00 СПБ', tag: '', timeClass: 'time alt' },
+          { name: 'Новый стрим', time: '12:00', tag: '', timeClass: 'time alt' },
         ];
         return nextDay;
       }),
@@ -210,5 +219,7 @@ export function useScheduleState(): UseScheduleStateResult {
     resetTheme,
     saveAsImage,
     isExporting,
+    view,
+    setView,
   };
 }

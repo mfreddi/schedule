@@ -19,39 +19,35 @@ export const DEFAULT_DATA: ScheduleDay[] = [
     highlight: false,
     off: false,
     offText: 'Выходной',
-    games: [
-      { name: 'Delta Force', time: '~19:00 СПБ', tag: 'Открытие недели', timeClass: 'time alt' },
-    ],
+    games: [{ name: 'Delta Force', time: '~19:00', tag: 'Открытие недели', timeClass: 'time alt' }],
   },
   {
     day: 'ВТ',
     highlight: false,
     off: false,
     offText: 'Выходной',
-    games: [{ name: 'Hunt: Showdown', time: '19:00 СПБ', tag: '', timeClass: 'time alt' }],
+    games: [{ name: 'Hunt: Showdown', time: '19:00', tag: '', timeClass: 'time alt' }],
   },
   {
     day: 'СР',
     highlight: false,
     off: false,
     offText: 'Выходной',
-    games: [{ name: 'Hunt: Showdown', time: '19:00 СПБ', tag: '', timeClass: 'time alt' }],
+    games: [{ name: 'Hunt: Showdown', time: '19:00', tag: '', timeClass: 'time alt' }],
   },
   {
     day: 'ЧТ',
     highlight: false,
     off: false,
     offText: 'Выходной',
-    games: [
-      { name: 'Need for Speed: Most Wanted', time: '19:00 СПБ', tag: '', timeClass: 'time alt' },
-    ],
+    games: [{ name: 'Need for Speed: Most Wanted', time: '19:00', tag: '', timeClass: 'time alt' }],
   },
   {
     day: 'ПТ',
     highlight: false,
     off: false,
     offText: 'Выходной',
-    games: [{ name: 'Dead by Daylight', time: '20:00 СПБ', tag: '', timeClass: 'time alt' }],
+    games: [{ name: 'Dead by Daylight', time: '20:00', tag: '', timeClass: 'time alt' }],
   },
   {
     day: 'СБ',
@@ -61,7 +57,7 @@ export const DEFAULT_DATA: ScheduleDay[] = [
     games: [
       {
         name: 'Ретро-вечер',
-        time: '~10:00 СПБ',
+        time: '~10:00',
         tag: 'играю с желающими из чата',
         timeClass: 'time alt',
       },
@@ -75,7 +71,7 @@ export const DEFAULT_DATA: ScheduleDay[] = [
     games: [
       {
         name: 'Чилл / вопрос-ответ',
-        time: '~10:00 СПБ',
+        time: '~10:00',
         tag: 'играю с желающими из чата',
         timeClass: 'time alt',
       },
