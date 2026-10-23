@@ -1,12 +1,9 @@
-name: Deploy to GitHub Pages
+name: Deploy Schedule to Beget
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
-
-permissions:
-  contents: write
 
 jobs:
   build-and-deploy:
@@ -29,12 +26,13 @@ jobs:
           GITHUB_ACTIONS: true
         run: npm run build
 
-      - name: Copy CNAME and .nojekyll into build
-        run: cp CNAME dist/CNAME && cp .nojekyll dist/.nojekyll
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Sync files via FTP to Beget
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          cname: schedule.mfred.ru
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./dist/ # Загружаем содержимое собранной папки dist
+          server-dir: ${{ secrets.FTP_DIR }} # В секрете должно быть: public_html/schedule/
+          protocol: ftps
+          security: loose
